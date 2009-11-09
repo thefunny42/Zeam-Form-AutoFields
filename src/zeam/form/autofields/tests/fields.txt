@@ -42,6 +42,10 @@ You can't change those fields:
      ...
   AttributeError
 
+
+Cache
+-----
+
 The querying of the fields is cached. If you had new fields, you will
 only see them in a new form:
 
@@ -60,3 +64,65 @@ But on a new form:
   >>> new_form = MyForm(object(), request)
   >>> list(new_form.fields)
   [<Field Title>, <Field Description>, <Field Name>, <Field Phone>]
+
+
+Form independence
+-----------------
+
+You can register fields only for a given form:
+
+  >>> class MyPrivateForm(MyForm):
+  ...     pass
+
+  >>> class MySpecialPrivateFields(autofields.AutoFields):
+  ...      autofields.form(MyPrivateForm)
+  ...      autofields.group(IMyFieldSet)
+  ...      fields = base.Fields(base.Field('SSN'))
+
+  >>> grok_component("fields", MySpecialPrivateFields)
+  True
+
+So now if you create a new advanced form:
+
+  >>> private_form = MyPrivateForm(object(), request)
+  >>> list(private_form.fields)
+  [<Field Title>, <Field Description>, <Field Name>, <Field Phone>, <Field SSN>]
+
+However generic form stays without the new specific fields:
+
+  >>> public_form = MyForm(object(), request)
+  >>> list(public_form.fields)
+  [<Field Title>, <Field Description>, <Field Name>, <Field Phone>]
+
+
+FieldCollector independence
+---------------------------
+
+You can have different collector on the same form:
+
+  >>> class IMyExtraFieldSet(Interface):
+  ...    pass
+
+  >>> class MyExtraFields(autofields.AutoFields):
+  ...      autofields.group(IMyExtraFieldSet)
+  ...      fields = base.Fields(base.Field('City'), base.Field('Country'))
+
+  >>> grok_component("fields", MyExtraFields)
+  True
+
+  >>> class CompleteForm(MyForm):
+  ...      extra_fields = autofields.FieldsCollector(IMyExtraFieldSet)
+
+  >>> complete_form = CompleteForm(object(), request)
+
+  >>> list(complete_form.fields)
+  [<Field Title>, <Field Description>, <Field Name>, <Field Phone>]
+  >>> list(complete_form.extra_fields)
+  [<Field City>, <Field Country>]
+
+  >>> list(complete_form.fields)
+  [<Field Title>, <Field Description>, <Field Name>, <Field Phone>]
+  >>> list(complete_form.extra_fields)
+  [<Field City>, <Field Country>]
+
+(We check it twice to be sure that one collector doesn't affect the other)
