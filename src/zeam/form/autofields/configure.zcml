@@ -3,4 +3,7 @@
 
   <include package="zeam.form.base" />
 
+  <!-- Grok the grokker -->
+  <grok:grok package=".meta" />
+
 </configure>

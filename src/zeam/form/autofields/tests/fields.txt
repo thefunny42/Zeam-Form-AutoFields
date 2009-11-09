@@ -2,5 +2,37 @@
 zeam.form.autofields
 ====================
 
-  >>> 1 + 1
-  2
+The purpose of autofields is to collect fields from different
+location. There are group to a form by an interface:
+
+  >>> from zope.interface import Interface
+
+  >>> class IMyFieldSet(Interface):
+  ...    pass
+
+  >>> from zeam.form import autofields, base
+  >>> class MySpecialFields(autofields.AutoFields):
+  ...      autofields.group(IMyFieldSet)
+  ...      fields = base.Fields(base.Field('Title'), base.Field('Description'))
+
+And we need to Grok them:
+
+  >>> grok_component("fields", MySpecialFields)
+  True
+
+Now, you can create a form with a FieldCollector. It will collect all
+defined fields:
+
+  >>> class MyForm(base.Form):
+  ...   fields = autofields.FieldsCollector(IMyFieldSet)
+
+  >>> from zope.publisher.browser import TestRequest
+  >>> request = TestRequest()
+  >>> form = MyForm(object(), request)
+
+  >>> form.fields
+  <Fields>
+  >>> list(form.fields)
+  [<Field Title>, <Field Description>]
+
+
