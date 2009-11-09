@@ -27,6 +27,16 @@ setup(name='zeam.form.autofields',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'martian',
+          'zope.component',
+          'grokcore.viewlet',
           'zeam.form.base',
+          # Test
+          'zope.securitypolicy',
+          'zope.app.authentication',
+          'zope.app.testing',
+          'zope.app.zcmlfiles',
+          'zope.testing',
+          'grokcore.component',
           ],
       )

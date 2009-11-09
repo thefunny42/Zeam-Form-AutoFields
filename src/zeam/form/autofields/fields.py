@@ -1,28 +1,20 @@
 
 from zope import component
-from grokcore import component as grok
 import martian
 
 from zeam.form.base import Fields
 from zeam.form.base.interfaces import IFormCanvas
 
-
-class form(martian.Directive):
-    scope = martian.CLASS
-    store = martian.ONCE
-    default = IFormCanvas
-
-
 class group(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE
-    default = None
+    validate = martian.validateInterfaceOrClass
 
 
 class AutoFields(object):
     """Create a list of automatic fields.
     """
-    grok.baseclass()
+    martian.baseclass()
 
     fields = Fields()
 

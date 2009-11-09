@@ -75,7 +75,7 @@ You can register fields only for a given form:
   ...     pass
 
   >>> class MySpecialPrivateFields(autofields.AutoFields):
-  ...      autofields.form(MyPrivateForm)
+  ...      autofields.view(MyPrivateForm)
   ...      autofields.group(IMyFieldSet)
   ...      fields = base.Fields(base.Field('SSN'))
 
