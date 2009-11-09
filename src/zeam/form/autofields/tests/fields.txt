@@ -35,4 +35,28 @@ defined fields:
   >>> list(form.fields)
   [<Field Title>, <Field Description>]
 
+You can't change those fields:
 
+  >>> form.fields = base.Fields()
+  Traceback (most recent call last):
+     ...
+  AttributeError
+
+The querying of the fields is cached. If you had new fields, you will
+only see them in a new form:
+
+  >>> class PersonalFields(autofields.AutoFields):
+  ...      autofields.group(IMyFieldSet)
+  ...      fields = base.Fields(base.Field('Name'), base.Field('Phone'))
+
+  >>> grok_component("fields", PersonalFields)
+  True
+
+  >>> list(form.fields)
+  [<Field Title>, <Field Description>]
+
+But on a new form:
+
+  >>> new_form = MyForm(object(), request)
+  >>> list(new_form.fields)
+  [<Field Title>, <Field Description>, <Field Name>, <Field Phone>]

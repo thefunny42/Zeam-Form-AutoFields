@@ -36,13 +36,15 @@ class FieldsCollector(object):
 
     def __init__(self, interface):
         self.interface = interface
-        self.__cache = None
+        self.key = '_autofields_%s' % interface.__identifier__
 
     def __get__(self, obj, type=None):
-        if self.__cache is None:
-            self.__cache = Fields(
+        cache = obj.__dict__.get(self.key, None)
+        if cache is None:
+            cache = Fields(
                 *component.subscribers((obj,), self.interface))
-        return self.__cache
+            obj.__dict__[self.key] = cache
+        return cache
 
     def __set__(self, obj, value):
         raise AttributeError
