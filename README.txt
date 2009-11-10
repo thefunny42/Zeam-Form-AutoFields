@@ -40,6 +40,9 @@ And you will be able to use those fields on your form somewhere else::
 API
 ===
 
+In addition to its API, ``zeam.form.autofields`` export the one of
+``zeam.form.base``.
+
 Classes
 -------
 
