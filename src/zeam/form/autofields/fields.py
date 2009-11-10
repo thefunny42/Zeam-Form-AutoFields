@@ -32,12 +32,14 @@ class FieldsCollector(object):
         self.key = '_autofields_%s' % interface.__identifier__
 
     def __get__(self, obj, type=None):
+        if obj is None:
+            return Fields()
+
         cache = obj.__dict__.get(self.key, None)
         if cache is None:
             providers = component.subscribers((obj,), self.interface)
             providers = sort_components(providers)
-            cache = Fields(
-                *(p.fields for p in providers))
+            cache = Fields(*(p.fields for p in providers))
             obj.__dict__[self.key] = cache
         return cache
 

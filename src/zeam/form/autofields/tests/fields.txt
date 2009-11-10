@@ -43,6 +43,14 @@ You can't change those fields:
      ...
   AttributeError
 
+The fields only work on an instance of a class, no fields will be
+found if you try to lookup from a class:
+
+  >>> MyForm.fields
+  <Fields>
+  >>> list(MyForm.fields)
+  []
+
 
 Cache
 -----
