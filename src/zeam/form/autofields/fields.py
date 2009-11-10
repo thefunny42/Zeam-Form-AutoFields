@@ -1,5 +1,6 @@
 
 from zope import component
+from grokcore.viewlet.util import sort_components
 import martian
 
 from zeam.form.base import Fields
@@ -18,8 +19,8 @@ class AutoFields(object):
 
     fields = Fields()
 
-    def __new__(self, context):
-        return self.fields
+    def __init__(self, context):
+        self.context = context
 
 
 class FieldsCollector(object):
@@ -33,8 +34,10 @@ class FieldsCollector(object):
     def __get__(self, obj, type=None):
         cache = obj.__dict__.get(self.key, None)
         if cache is None:
+            providers = component.subscribers((obj,), self.interface)
+            providers = sort_components(providers)
             cache = Fields(
-                *component.subscribers((obj,), self.interface))
+                *(p.fields for p in providers))
             obj.__dict__[self.key] = cache
         return cache
 

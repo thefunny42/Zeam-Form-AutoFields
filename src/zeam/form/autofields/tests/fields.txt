@@ -13,6 +13,7 @@ location. There are group to a form by an interface:
   >>> from zeam.form import autofields, base
   >>> class MySpecialFields(autofields.AutoFields):
   ...      autofields.group(IMyFieldSet)
+  ...      autofields.order(0)
   ...      fields = base.Fields(base.Field('Title'), base.Field('Description'))
 
 And we need to Grok them:
@@ -51,6 +52,7 @@ only see them in a new form:
 
   >>> class PersonalFields(autofields.AutoFields):
   ...      autofields.group(IMyFieldSet)
+  ...      autofields.order(10)
   ...      fields = base.Fields(base.Field('Name'), base.Field('Phone'))
 
   >>> grok_component("fields", PersonalFields)
@@ -77,6 +79,7 @@ You can register fields only for a given form:
   >>> class MySpecialPrivateFields(autofields.AutoFields):
   ...      autofields.view(MyPrivateForm)
   ...      autofields.group(IMyFieldSet)
+  ...      autofields.order(30)
   ...      fields = base.Fields(base.Field('SSN'))
 
   >>> grok_component("fields", MySpecialPrivateFields)

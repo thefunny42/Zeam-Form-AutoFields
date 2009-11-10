@@ -24,10 +24,12 @@ Now you can define groups of fields::
 
   >>> class ReplyInformation(autofields.AutoFields):
   ...     autofields.group(IReplyFields)
+  ...     autofields.order(0)
   ...     fields = base.Fields(base.Field('Comment'))
 
   >>> class ReplyBlogInformation(autofields.AutoFields):
   ...     autofields.group(IReplyFields)
+  ...     autofields.order(10)
   ...     fields = base.Fields(base.Field('Blog URL'))
 
 And you will be able to use those fields on your form somewhere else::
@@ -57,6 +59,10 @@ Directives
    Directive used on ``AutoFields`` that will let you specify for
    which Form (or view) you whish to provide the fields for. This
    directive is not required, and default to ``IBrowserView``.
+
+``order``
+   Optional directive which let decide in wich order the fields will
+   included at the end.
 
 Properties
 ----------
