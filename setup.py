@@ -1,7 +1,17 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '1.1dev'
+
+tests_require = [
+    'zope.securitypolicy',
+    'zope.app.authentication',
+    'zope.app.testing',
+    'zope.app.zcmlfiles',
+    'zope.testing',
+    'grokcore.component',
+]
+
 
 setup(name='zeam.form.autofields',
       version=version,
@@ -31,12 +41,7 @@ setup(name='zeam.form.autofields',
           'zope.component',
           'grokcore.viewlet',
           'zeam.form.base',
-          # Test
-          'zope.securitypolicy',
-          'zope.app.authentication',
-          'zope.app.testing',
-          'zope.app.zcmlfiles',
-          'zope.testing',
-          'grokcore.component',
           ],
+      tests_require = tests_require,
+      extras_require = {'test': tests_require},
       )
