@@ -1,5 +1,6 @@
 
 from zope import component
+from zope.browser.interfaces import IBrowserView
 from grokcore.component.util import sort_components
 import martian
 
@@ -19,8 +20,9 @@ class AutoFields(object):
 
     fields = Fields()
 
-    def __init__(self, context):
+    def __init__(self, context, request):
         self.context = context
+        self.request = request
 
 
 class FieldsCollector(object):
@@ -36,8 +38,8 @@ class FieldsCollector(object):
             return Fields()
 
         cache = obj.__dict__.get(self.key, None)
-        if cache is None:
-            providers = component.subscribers((obj,), self.interface)
+        if cache is None and IBrowserView.providedBy(obj):
+            providers = component.subscribers((obj.context, obj), self.interface)
             providers = sort_components(providers)
             cache = Fields(*(p.fields for p in providers))
             obj.__dict__[self.key] = cache
