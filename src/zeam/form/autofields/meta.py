@@ -1,7 +1,7 @@
 
 from zope import component
 from zope.component import interface
-import grokcore.viewlet
+import grokcore.view
 import martian
 
 from zeam.form.autofields import fields
@@ -9,7 +9,7 @@ from zeam.form.autofields import fields
 
 class AutoFieldGrokker(martian.ClassGrokker):
     martian.component(fields.AutoFields)
-    martian.directive(grokcore.viewlet.view)
+    martian.directive(grokcore.view.view)
     martian.directive(fields.group)
 
     def execute(self, factory, view, group, config, **kw):

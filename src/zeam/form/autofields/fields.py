@@ -1,10 +1,10 @@
 
 from zope import component
-from grokcore.viewlet.util import sort_components
+from grokcore.component.util import sort_components
 import martian
 
 from zeam.form.base import Fields
-from zeam.form.base.interfaces import IFormCanvas
+
 
 class group(martian.Directive):
     scope = martian.CLASS

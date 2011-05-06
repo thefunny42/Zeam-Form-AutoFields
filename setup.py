@@ -9,7 +9,6 @@ tests_require = [
     'zope.app.testing',
     'zope.app.zcmlfiles',
     'zope.testing',
-    'grokcore.component',
 ]
 
 
@@ -38,8 +37,10 @@ setup(name='zeam.form.autofields',
       install_requires=[
           'setuptools',
           'martian',
+          'zope.interface',
           'zope.component',
-          'grokcore.viewlet',
+          'grokcore.component',
+          'grokcore.view',
           'zeam.form.base',
           ],
       tests_require = tests_require,
