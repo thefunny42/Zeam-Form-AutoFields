@@ -7,6 +7,8 @@
 *.pyc
 *.egg-info
 .installed.cfg
+.mr.developer.cfg
 bin/
+devel/
 parts/
 develop-eggs/

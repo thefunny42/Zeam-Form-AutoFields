@@ -4,11 +4,9 @@ import os
 version = '1.1dev'
 
 tests_require = [
-    'zope.securitypolicy',
-    'zope.app.authentication',
-    'zope.app.testing',
-    'zope.app.zcmlfiles',
+    'zope.app.wsgi',
     'zope.testing',
+    'zeam.form.base [test]',
 ]
 
 
