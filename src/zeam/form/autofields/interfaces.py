@@ -12,6 +12,8 @@ class IZeamFormAutoFieldsAPI(IZeamFormBaseAPI):
         u"A definition of fields to be collected")
     FieldsCollector = interface.Attribute(
         u"A property collecting auto fields for the given object")
+    FieldsDataManager = interface.Attribute(
+        u"A property that creates a adaptive data manager for auto fields")
 
     view = interface.Attribute(
         u"Directive to restrict to which object the fields are collected for")

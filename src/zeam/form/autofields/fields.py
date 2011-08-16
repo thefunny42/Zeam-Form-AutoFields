@@ -33,17 +33,18 @@ class FieldsCollector(object):
         self.interface = interface
         self.key = '_autofields_%s' % interface.__identifier__
 
-    def __get__(self, obj, type=None):
-        if obj is None:
+    def __get__(self, form, type=None):
+        if form is None:
             return Fields()
 
-        cache = obj.__dict__.get(self.key, None)
-        if cache is None and IBrowserView.providedBy(obj):
-            providers = component.subscribers((obj.context, obj), self.interface)
+        cache = form.__dict__.get(self.key, None)
+        if cache is None and IBrowserView.providedBy(form):
+            providers = component.subscribers(
+                (form.context, form), self.interface)
             providers = sort_components(providers)
             cache = Fields(*(p.fields for p in providers))
-            obj.__dict__[self.key] = cache
+            form.__dict__[self.key] = cache
         return cache
 
-    def __set__(self, obj, value):
+    def __set__(self, form, value):
         raise AttributeError
