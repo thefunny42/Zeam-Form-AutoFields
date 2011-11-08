@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.1dev'
+version = '1.0'
 
 tests_require = [
     'zope.app.wsgi',
@@ -25,7 +25,7 @@ setup(name='zeam.form.autofields',
       keywords='zeam form fields collect',
       author='Sylvain Viollon',
       author_email='thefunny@gmail.com',
-      url='',
+      url='http://pypi.python.org/pypi/zeam.form.autofields',
       license='BSD',
       package_dir={'': 'src'},
       packages=find_packages('src'),
@@ -35,11 +35,13 @@ setup(name='zeam.form.autofields',
       install_requires=[
           'setuptools',
           'martian',
+          'zope.browser',
           'zope.interface',
           'zope.component',
           'grokcore.component',
           'grokcore.view',
-          'zeam.form.base',
+          'zeam.form.base >= 1.2',
+          'zeam.form.ztk >= 1.2',
           ],
       tests_require = tests_require,
       extras_require = {'test': tests_require},
