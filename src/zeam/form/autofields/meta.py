@@ -1,7 +1,5 @@
 
-from zope import component
 from zope.interface import Interface
-from zope.component import interface
 import grokcore.component
 import grokcore.view
 import martian
@@ -18,18 +16,14 @@ class AutoFieldGrokker(martian.ClassGrokker):
     def execute(self, factory, context, view, group, config, **kw):
         config.action(
             discriminator=None,
-            callable=self.registerSubscriber,
+            callable=grokcore.component.util.provideSubscriptionAdapter,
             args=(factory, (context, view,), group,),)
         config.action(
             discriminator=None,
-            callable=interface.provideInterface,
+            callable=grokcore.component.util.provideInterface,
             args=('', view))
         config.action(
             discriminator=None,
-            callable=interface.provideInterface,
+            callable=grokcore.component.util.provideInterface,
             args=('', group))
         return True
-
-    def registerSubscriber(self, factory, required, provided):
-        sitemanager = component.getGlobalSiteManager()
-        sitemanager.registerSubscriptionAdapter(factory, required, provided)
