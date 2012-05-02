@@ -1,11 +1,13 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.1dev'
+version = '1.0.1'
 
 tests_require = [
     'zope.app.wsgi',
+    'zope.configuration',
     'zope.testing',
+    'zope.publisher',
     'zeam.form.base [test]',
 ]
 
@@ -38,7 +40,7 @@ setup(name='zeam.form.autofields',
           'zope.browser',
           'zope.interface',
           'zope.component',
-          'grokcore.component',
+          'grokcore.component >= 2.5',
           'grokcore.view',
           'zeam.form.base >= 1.2',
           'zeam.form.ztk >= 1.2',
